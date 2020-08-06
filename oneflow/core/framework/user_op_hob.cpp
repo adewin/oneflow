@@ -58,6 +58,14 @@ hob::HobContextGetter<KernelRegContext, DataType> HobDataType(const std::string&
       });
 }
 
+HobStringContextGetter<KernelRegContext> HobDeviceTag() {
+  std::ostringstream string_stream;
+  string_stream << "device_tag";
+  return HobStringContextGetter<KernelRegContext>(
+      string_stream.str(),
+      [](const KernelRegContext& ctx) -> std::string { return ctx.device_tag(); });
+}
+
 }  // namespace user_op
 
 }  // namespace oneflow

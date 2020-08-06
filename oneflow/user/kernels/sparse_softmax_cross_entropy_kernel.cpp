@@ -67,7 +67,7 @@ class SparseSoftmaxCrossEntropyMsKernel final : public user_op::OpKernel {
   REGISTER_USER_KERNEL(kernel_name)                                                            \
       .SetCreateFn<kernel_class<device_type_v, OF_PP_PAIR_FIRST(dtype_pair),                   \
                                 OF_PP_PAIR_FIRST(ltype_pair)>>()                               \
-      .SetIsMatchedHob((user_op::HobDeviceType() == device_type_v)                             \
+      .SetIsMatchedHob((user_op::HobDeviceTag() == ToString(device_type_v))                    \
                        & (user_op::HobDataType("label", 0) == OF_PP_PAIR_SECOND(ltype_pair))   \
                        & (user_op::HobDataType("out", 0) == OF_PP_PAIR_SECOND(dtype_pair)))    \
       .SetInferTmpSizeFn([](user_op::InferContext* ctx) {                                      \
@@ -154,7 +154,7 @@ class SparseSoftmaxCrossEntropyMsGradKernel final : public user_op::OpKernel {
       .SetCreateFn<kernel_class<device_type_v, OF_PP_PAIR_FIRST(dtype_pair),                     \
                                 OF_PP_PAIR_FIRST(ltype_pair)>>()                                 \
       .SetIsMatchedHob(                                                                          \
-          (user_op::HobDeviceType() == device_type_v)                                            \
+          (user_op::HobDeviceTag() == ToString(device_type_v))                                   \
           & (user_op::HobDataType("label", 0) == OF_PP_PAIR_SECOND(ltype_pair))                  \
           & (user_op::HobDataType("prediction_diff", 0) == OF_PP_PAIR_SECOND(dtype_pair)))       \
       .SetInplaceProposalFn([](const user_op::InferContext&,                                     \
